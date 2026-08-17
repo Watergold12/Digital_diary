@@ -7,6 +7,7 @@ import { NewEntry } from '../pages/NewEntry';
 import { EditEntry } from '../pages/EditEntry';
 import { Diary } from '../pages/Diary';
 import { Tags } from '../pages/Tags';
+import { TagFilteredEntries } from '../pages/TagFilteredEntries';
 import { Search } from '../pages/Search';
 import { Settings } from '../pages/Settings';
 
@@ -20,6 +21,7 @@ export const AppRoutes: React.FC = () => {
         <Route path="diary/:id" element={<DiaryEntry />} />
         <Route path="diary/:id/edit" element={<EditEntry />} />
         <Route path="tags" element={<Tags />} />
+        <Route path="tags/:tagId" element={<TagFilteredEntries />} />
         <Route path="search" element={<Search />} />
         <Route path="settings" element={<Settings />} />
         <Route path="*" element={<Navigate to="/" replace />} />

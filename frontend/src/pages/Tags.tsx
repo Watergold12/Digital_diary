@@ -2,6 +2,7 @@ import React from 'react';
 import { useTags } from '../hooks/useTags';
 import { useDiary } from '../hooks/useDiary';
 import { TagBadge } from '../components/tags/TagBadge';
+import { Link } from 'react-router-dom';
 
 export const Tags: React.FC = () => {
   const { tags } = useTags();
@@ -28,18 +29,23 @@ export const Tags: React.FC = () => {
             No tags created yet.
           </div>
         ) : (
-          <ul className="divide-y divide-border">
+          <div className="divide-y divide-border flex flex-col">
             {tags.map((tag) => (
-              <li key={tag.id} className="flex items-center justify-between px-6 py-4 hover:bg-gray-50/50 transition-colors">
+              <Link 
+                key={tag.id} 
+                to={`/tags/${tag.id}`}
+                className="flex items-center justify-between px-6 py-4 hover:bg-secondary-bg/50 transition-all cursor-pointer group"
+              >
                 <div className="flex items-center gap-4">
-                  <TagBadge tag={tag} className="text-sm px-3 py-1" />
+                  <TagBadge tag={tag} className="text-sm px-3 py-1 group-hover:scale-105 transition-transform" />
                 </div>
-                <div className="text-secondary text-sm font-medium">
-                  {getEntryCount(tag.id)} {getEntryCount(tag.id) === 1 ? 'entry' : 'entries'}
+                <div className="text-secondary text-sm font-medium flex items-center gap-2 group-hover:text-primary transition-colors">
+                  <span>{getEntryCount(tag.id)} {getEntryCount(tag.id) === 1 ? 'entry' : 'entries'}</span>
+                  <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span>
                 </div>
-              </li>
+              </Link>
             ))}
-          </ul>
+          </div>
         )}
       </div>
     </div>
