@@ -13,11 +13,11 @@ export const AppLayout: React.FC = () => {
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
       
-      <div className="flex flex-1 overflow-hidden relative">
+      <div className="flex flex-1 relative">
         <Sidebar />
         
         {/* Main Content Area */}
-        <main className="flex-1 overflow-y-auto pb-20 md:pb-0 scroll-smooth">
+        <main className="flex-1 pb-20 md:pb-0 scroll-smooth">
           <div className="max-w-5xl mx-auto w-full p-4 md:p-8">
             <Outlet />
           </div>
