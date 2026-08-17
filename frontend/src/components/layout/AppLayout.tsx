@@ -3,8 +3,12 @@ import { Outlet } from 'react-router-dom';
 import { Header } from './Header';
 import { Sidebar } from './Sidebar';
 import { MobileNavbar } from './MobileNavbar';
+import { useSettings } from '../../hooks/useSettings';
 
 export const AppLayout: React.FC = () => {
+  // Initialize settings/theme on app load
+  useSettings();
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Header />

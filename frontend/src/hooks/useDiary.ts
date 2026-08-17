@@ -62,5 +62,16 @@ export const useDiary = () => {
     }
   };
 
-  return { entries, isLoading, error, addEntry, editEntry, removeEntry, refreshEntries: fetchEntries };
+  const clearAllEntries = async () => {
+    try {
+      await api.deleteAllEntries();
+      setEntries([]);
+      toast('All entries deleted', 'success');
+    } catch (err) {
+      toast('Failed to delete entries', 'error');
+      throw err;
+    }
+  };
+
+  return { entries, isLoading, error, addEntry, editEntry, removeEntry, clearAllEntries, refreshEntries: fetchEntries };
 };

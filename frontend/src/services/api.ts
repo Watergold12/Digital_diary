@@ -120,5 +120,10 @@ export const api = {
     await delay(300);
     const entries = await this.getEntries();
     localStorage.setItem('diary_entries', JSON.stringify(entries.filter((e) => e.id !== id)));
+  },
+
+  async deleteAllEntries(): Promise<void> {
+    await delay(500);
+    localStorage.setItem('diary_entries', JSON.stringify([]));
   }
 };
