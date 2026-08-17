@@ -14,11 +14,11 @@ export const TagBadge: React.FC<TagBadgeProps> = ({ tag, className, onClick, onR
   
   // Map tag colors to CSS variables defined in index.css
   const colorMap: Record<string, { bg: string, text: string, hover: string }> = {
-    lavender: { bg: 'bg-[var(--color-tag-lavender)]', text: 'text-indigo-900', hover: 'hover:bg-indigo-200' },
-    blue: { bg: 'bg-[var(--color-tag-blue)]', text: 'text-blue-900', hover: 'hover:bg-blue-200' },
-    green: { bg: 'bg-[var(--color-tag-green)]', text: 'text-green-900', hover: 'hover:bg-green-200' },
-    yellow: { bg: 'bg-[var(--color-tag-yellow)]', text: 'text-yellow-900', hover: 'hover:bg-yellow-200' },
-    pink: { bg: 'bg-[var(--color-tag-pink)]', text: 'text-pink-900', hover: 'hover:bg-pink-200' },
+    lavender: { bg: 'bg-tag-lavender-bg', text: 'text-tag-lavender-text', hover: 'hover:opacity-80' },
+    blue: { bg: 'bg-tag-blue-bg', text: 'text-tag-blue-text', hover: 'hover:opacity-80' },
+    green: { bg: 'bg-tag-green-bg', text: 'text-tag-green-text', hover: 'hover:opacity-80' },
+    yellow: { bg: 'bg-tag-yellow-bg', text: 'text-tag-yellow-text', hover: 'hover:opacity-80' },
+    pink: { bg: 'bg-tag-pink-bg', text: 'text-tag-pink-text', hover: 'hover:opacity-80' },
   };
 
   const style = colorMap[tag.color] || colorMap.lavender;

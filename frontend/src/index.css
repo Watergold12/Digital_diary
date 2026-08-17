@@ -1,28 +1,94 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #4F46E5;
-  --color-primary-hover: #4338CA;
-  --color-background: #FAF9F6;
-  --color-surface: #FFFFFF;
-  --color-secondary-bg: #F3F1FF;
-  --color-main: #1F2937;
-  --color-secondary: #64748B;
-  --color-border: #E5E7EB;
-  --color-success: #22C55E;
-  --color-warning: #F59E0B;
-  --color-danger: #EF4444;
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-secondary-bg: var(--secondary-bg);
+  --color-main: var(--main-text);
+  --color-secondary: var(--secondary-text);
+  --color-border: var(--border-color);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
 
-  --color-tag-lavender: #EDE9FE;
-  --color-tag-blue: #DBEAFE;
-  --color-tag-green: #DCFCE7;
-  --color-tag-yellow: #FEF3C7;
-  --color-tag-pink: #FCE7F3;
+  --color-tag-lavender-bg: var(--tag-lavender-bg);
+  --color-tag-lavender-text: var(--tag-lavender-text);
+  
+  --color-tag-blue-bg: var(--tag-blue-bg);
+  --color-tag-blue-text: var(--tag-blue-text);
+  
+  --color-tag-green-bg: var(--tag-green-bg);
+  --color-tag-green-text: var(--tag-green-text);
+  
+  --color-tag-yellow-bg: var(--tag-yellow-bg);
+  --color-tag-yellow-text: var(--tag-yellow-text);
+  
+  --color-tag-pink-bg: var(--tag-pink-bg);
+  --color-tag-pink-text: var(--tag-pink-text);
 }
 
 @layer base {
+  :root {
+    /* Light Theme */
+    --background: #FAF9F6;
+    --surface: #FFFFFF;
+    --primary: #4F46E5;
+    --primary-hover: #4338CA;
+    --main-text: #1F2937;
+    --secondary-text: #64748B;
+    --border-color: #E5E7EB;
+    --secondary-bg: #F3F1FF;
+    --success: #22C55E;
+    --warning: #F59E0B;
+    --danger: #EF4444;
+
+    /* Light Theme Tags */
+    --tag-lavender-bg: #EDE9FE;
+    --tag-lavender-text: #312E81;
+    --tag-blue-bg: #DBEAFE;
+    --tag-blue-text: #1E3A8A;
+    --tag-green-bg: #DCFCE7;
+    --tag-green-text: #14532D;
+    --tag-yellow-bg: #FEF3C7;
+    --tag-yellow-text: #78350F;
+    --tag-pink-bg: #FCE7F3;
+    --tag-pink-text: #831843;
+  }
+
+  .dark {
+    /* Dark Theme */
+    --background: #111827;
+    --surface: #1F2937;
+    --primary: #818CF8;
+    --primary-hover: #A5B4FC;
+    --main-text: #F9FAFB;
+    --secondary-text: #CBD5E1;
+    --border-color: #374151;
+    --secondary-bg: #312E81;
+    --success: #4ADE80;
+    --warning: #FBBF24;
+    --danger: #FB7185;
+
+    /* Dark Theme Tags */
+    --tag-lavender-bg: #312E81;
+    --tag-lavender-text: #E0E7FF;
+    --tag-blue-bg: #1E3A8A;
+    --tag-blue-text: #DBEAFE;
+    --tag-green-bg: #14532D;
+    --tag-green-text: #DCFCE7;
+    --tag-yellow-bg: #78350F;
+    --tag-yellow-text: #FEF3C7;
+    --tag-pink-bg: #831843;
+    --tag-pink-text: #FCE7F3;
+  }
+
   body {
-    background-color: var(--color-background);
-    color: var(--color-main);
+    background-color: var(--background);
+    color: var(--main-text);
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 200ms;
   }
 }
