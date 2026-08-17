@@ -82,7 +82,7 @@ export const DiaryEntry: React.FC = () => {
         <div className="flex items-center gap-3">
           <Link 
             to={`/diary/${entry.id}/edit`}
-            className="flex items-center gap-2 text-secondary hover:text-primary transition-colors p-2 rounded-md hover:bg-gray-100"
+            className="flex items-center gap-2 text-secondary hover:text-primary transition-colors p-2 rounded-md hover:bg-secondary-bg"
           >
             <Pencil size={18} />
             <span className="hidden sm:inline">Edit</span>

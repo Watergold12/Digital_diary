@@ -61,7 +61,7 @@ export const DropdownItem: React.FC<DropdownItemProps> = ({ onClick, children, i
         "w-full text-left flex items-center px-4 py-2 text-sm transition-colors",
         destructive 
           ? "text-danger hover:bg-red-50" 
-          : "text-main hover:bg-gray-100"
+          : "text-main hover:bg-secondary-bg"
       )}
       role="menuitem"
     >

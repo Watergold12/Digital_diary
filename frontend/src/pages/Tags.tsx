@@ -20,7 +20,7 @@ export const Tags: React.FC = () => {
       </header>
 
       <div className="bg-surface rounded-xl border border-border overflow-hidden">
-        <div className="px-6 py-4 border-b border-border bg-gray-50/50">
+        <div className="px-6 py-4 border-b border-border bg-secondary-bg/50">
           <h2 className="text-sm font-semibold text-secondary uppercase tracking-wider">Your tags</h2>
         </div>
         

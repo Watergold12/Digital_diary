@@ -37,7 +37,7 @@ export const Sidebar: React.FC = () => {
                 "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
                 isActive 
                   ? "bg-secondary-bg text-primary" 
-                  : "text-secondary hover:bg-gray-100 hover:text-main"
+                  : "text-secondary hover:bg-secondary-bg hover:text-main"
               )
             }
           >
@@ -55,7 +55,7 @@ export const Sidebar: React.FC = () => {
               "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
               isActive 
                 ? "bg-secondary-bg text-primary" 
-                : "text-secondary hover:bg-gray-100 hover:text-main"
+                : "text-secondary hover:bg-secondary-bg hover:text-main"
             )
           }
         >

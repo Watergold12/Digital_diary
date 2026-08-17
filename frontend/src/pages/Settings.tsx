@@ -82,7 +82,7 @@ export const Settings: React.FC = () => {
       <div className="space-y-8">
         {/* Profile Section */}
         <section className="bg-surface rounded-xl border border-border overflow-hidden shadow-sm">
-          <div className="px-6 py-4 border-b border-border bg-gray-50/50">
+          <div className="px-6 py-4 border-b border-border bg-secondary-bg/50">
             <h2 className="text-sm font-semibold text-secondary uppercase tracking-wider">Profile</h2>
           </div>
           <div className="p-6">
@@ -125,7 +125,7 @@ export const Settings: React.FC = () => {
 
         {/* Appearance Section */}
         <section className="bg-surface rounded-xl border border-border overflow-hidden shadow-sm">
-          <div className="px-6 py-4 border-b border-border bg-gray-50/50">
+          <div className="px-6 py-4 border-b border-border bg-secondary-bg/50">
             <h2 className="text-sm font-semibold text-secondary uppercase tracking-wider">Appearance</h2>
           </div>
           <div className="p-6">
@@ -154,7 +154,7 @@ export const Settings: React.FC = () => {
 
         {/* Diary Preferences Section */}
         <section className="bg-surface rounded-xl border border-border overflow-hidden shadow-sm">
-          <div className="px-6 py-4 border-b border-border bg-gray-50/50">
+          <div className="px-6 py-4 border-b border-border bg-secondary-bg/50">
             <h2 className="text-sm font-semibold text-secondary uppercase tracking-wider">Diary Preferences</h2>
           </div>
           <div className="p-6 space-y-2">
@@ -186,7 +186,7 @@ export const Settings: React.FC = () => {
 
         {/* Notifications Section */}
         <section className="bg-surface rounded-xl border border-border overflow-hidden shadow-sm">
-          <div className="px-6 py-4 border-b border-border bg-gray-50/50">
+          <div className="px-6 py-4 border-b border-border bg-secondary-bg/50">
             <h2 className="text-sm font-semibold text-secondary uppercase tracking-wider">Notifications</h2>
           </div>
           <div className="p-6 space-y-2">
@@ -205,7 +205,7 @@ export const Settings: React.FC = () => {
 
         {/* Data Section */}
         <section className="bg-surface rounded-xl border border-border overflow-hidden shadow-sm">
-          <div className="px-6 py-4 border-b border-border bg-gray-50/50">
+          <div className="px-6 py-4 border-b border-border bg-secondary-bg/50">
             <h2 className="text-sm font-semibold text-secondary uppercase tracking-wider">Data</h2>
           </div>
           <div className="p-6 space-y-6">

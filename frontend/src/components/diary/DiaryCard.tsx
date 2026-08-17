@@ -23,7 +23,7 @@ export const DiaryCard: React.FC<DiaryCardProps> = ({ entry, onEdit, onDelete })
             <Dropdown
               align="right"
               trigger={
-                <button className="text-secondary hover:text-main p-1 rounded-md hover:bg-gray-100 transition-colors">
+                <button className="text-secondary hover:text-main p-1 rounded-md hover:bg-secondary-bg transition-colors">
                   <MoreHorizontal size={18} />
                 </button>
               }

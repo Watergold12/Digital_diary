@@ -27,7 +27,7 @@ export const TagSelector: React.FC<TagSelectorProps> = ({ availableTags, selecte
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-secondary hover:bg-gray-200 transition-colors"
+          className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary-bg text-secondary hover:bg-secondary-bg/80 transition-colors"
         >
           <Plus size={14} /> Add Tag
         </button>
