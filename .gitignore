@@ -1,0 +1,17 @@
+Assignment1_Report.md
+Implementation_Plan.md
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+backend/venv/*
+env/
+
+# Environment variables
+.env
+.env.*
+!.env.example
