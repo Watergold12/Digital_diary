@@ -37,6 +37,7 @@ export const entriesApi = {
       content: entryData.content,
       mood: entryData.mood,
       tag_ids: entryData.tags ? entryData.tags.map((t: any) => t.id) : [],
+      is_ai_generated: (entryData as any).is_ai_generated || false,
     };
     const e = await apiClient.post<any>('/api/entries', payload);
     return {
