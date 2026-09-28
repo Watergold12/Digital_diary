@@ -15,3 +15,7 @@ env/
 .env
 .env.*
 !.env.example
+
+# node_scripts
+node_modules
+dist
