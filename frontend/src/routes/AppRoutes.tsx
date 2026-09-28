@@ -1,6 +1,8 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { AppLayout } from '../components/layout/AppLayout';
+import { ProtectedRoute } from '../components/layout/ProtectedRoute';
+import { Login } from '../pages/Login';
+import { Register } from '../pages/Register';
 import { Dashboard } from '../pages/Dashboard';
 import { DiaryEntry } from '../pages/DiaryEntry';
 import { NewEntry } from '../pages/NewEntry';
@@ -14,7 +16,9 @@ import { Settings } from '../pages/Settings';
 export const AppRoutes: React.FC = () => {
   return (
     <Routes>
-      <Route path="/" element={<AppLayout />}>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/" element={<ProtectedRoute />}>
         <Route index element={<Dashboard />} />
         <Route path="diary" element={<Diary />} />
         <Route path="diary/new" element={<NewEntry />} />

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { api } from '../services/api';
+import { tagsApi } from '../api/tags';
 import { Tag } from '../types/tag';
 import { useToast } from '../components/ui/Toast';
 
@@ -12,7 +12,7 @@ export const useTags = () => {
   const fetchTags = useCallback(async () => {
     try {
       setIsLoading(true);
-      const data = await api.getTags();
+      const data = await tagsApi.getTags();
       setTags(data);
       setError(null);
     } catch (err) {
@@ -29,7 +29,7 @@ export const useTags = () => {
 
   const addTag = async (tagData: Omit<Tag, 'id'>) => {
     try {
-      const newTag = await api.createTag(tagData);
+      const newTag = await tagsApi.createTag(tagData);
       setTags((prev) => [...prev, newTag]);
       toast('Tag created successfully', 'success');
       return newTag;
@@ -41,7 +41,7 @@ export const useTags = () => {
 
   const removeTag = async (id: string) => {
     try {
-      await api.deleteTag(id);
+      await tagsApi.deleteTag(id);
       setTags((prev) => prev.filter((t) => t.id !== id));
       toast('Tag deleted', 'success');
     } catch (err) {

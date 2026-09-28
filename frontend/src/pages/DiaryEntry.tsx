@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import type { DiaryEntry as DiaryEntryType } from '../types/diary';
-import { api } from '../services/api';
+import { entriesApi } from '../api/entries';
 import { useDiary } from '../hooks/useDiary';
 import { formatDate } from '../utils/date';
 import { TagBadge } from '../components/tags/TagBadge';
@@ -22,7 +22,7 @@ export const DiaryEntry: React.FC = () => {
     const fetchEntry = async () => {
       if (!id) return;
       try {
-        const data = await api.getEntryById(id);
+        const data = await entriesApi.getEntryById(id);
         if (data) {
           setEntry(data);
         } else {

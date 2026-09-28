@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useDiary } from '../hooks/useDiary';
 import { DiaryEditor } from '../components/diary/DiaryEditor';
 import { DiaryEntry } from '../types/diary';
-import { api } from '../services/api';
+import { entriesApi } from '../api/entries';
 
 export const EditEntry: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -17,7 +17,7 @@ export const EditEntry: React.FC = () => {
     const fetchEntry = async () => {
       if (!id) return;
       try {
-        const data = await api.getEntryById(id);
+        const data = await entriesApi.getEntryById(id);
         if (data) {
           setEntry(data);
         } else {

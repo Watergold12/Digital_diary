@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
+from app.routers import auth, entries, tags
+from app.core.database import Base, engine
 
 app = FastAPI(
     title="Digital Diary API",
@@ -20,6 +22,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(auth.router)
+app.include_router(entries.router)
+app.include_router(tags.router)
 
 @app.get("/api/health")
 def health_check():
