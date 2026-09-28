@@ -1,23 +1,35 @@
-import React, { useState, useMemo } from 'react';
-import { useDiary } from '../hooks/useDiary';
+import React, { useState, useEffect } from 'react';
 import { DiaryCard } from '../components/diary/DiaryCard';
 import { Input } from '../components/ui/Input';
 import { Search as SearchIcon } from 'lucide-react';
+import { entriesApi } from '../api/entries';
+import { DiaryEntry } from '../types/diary';
 
 export const Search: React.FC = () => {
-  const { entries, isLoading } = useDiary();
   const [query, setQuery] = useState('');
+  const [filteredEntries, setFilteredEntries] = useState<DiaryEntry[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const filteredEntries = useMemo(() => {
-    if (!query.trim()) return [];
-    
-    const lowerQuery = query.toLowerCase();
-    return entries.filter(entry => 
-      entry.title.toLowerCase().includes(lowerQuery) ||
-      entry.content.toLowerCase().includes(lowerQuery) ||
-      entry.tags.some(tag => tag.name.toLowerCase().includes(lowerQuery))
-    );
-  }, [entries, query]);
+  useEffect(() => {
+    if (!query.trim()) {
+      setFilteredEntries([]);
+      return;
+    }
+
+    const timer = setTimeout(async () => {
+      try {
+        setIsLoading(true);
+        const results = await entriesApi.getEntries(query.trim());
+        setFilteredEntries(results);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    }, 300); // debounce
+
+    return () => clearTimeout(timer);
+  }, [query]);
 
   return (
     <div className="max-w-5xl mx-auto animate-in fade-in duration-500">
@@ -40,11 +52,11 @@ export const Search: React.FC = () => {
 
       {query.trim() && (
         <section>
-          <h2 className="text-sm font-semibold text-secondary mb-4 uppercase tracking-wider">
-            {filteredEntries.length} {filteredEntries.length === 1 ? 'Result' : 'Results'}
+          <h2 className="text-sm font-semibold text-secondary mb-4 uppercase tracking-wider flex items-center gap-2">
+            {isLoading ? 'Searching...' : `${filteredEntries.length} ${filteredEntries.length === 1 ? 'Result' : 'Results'}`}
           </h2>
           
-          {filteredEntries.length === 0 ? (
+          {filteredEntries.length === 0 && !isLoading ? (
             <div className="py-12 text-center text-secondary bg-surface rounded-xl border border-border">
               No entries found for "{query}". Try different keywords.
             </div>
@@ -58,10 +70,10 @@ export const Search: React.FC = () => {
         </section>
       )}
 
-      {!query.trim() && !isLoading && (
+      {!query.trim() && (
         <div className="py-16 text-center text-secondary/60">
           <SearchIcon size={48} className="mx-auto mb-4 opacity-20" />
-          <p className="text-lg">Start typing to search your diary</p>
+          <p className="text-lg">Start typing to search your diary on the server</p>
         </div>
       )}
     </div>

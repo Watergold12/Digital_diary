@@ -2,8 +2,13 @@ import { DiaryEntry } from '../types/diary';
 import { apiClient } from './client';
 
 export const entriesApi = {
-  getEntries: async (): Promise<DiaryEntry[]> => {
-    const backendEntries = await apiClient.get<any[]>('/api/entries');
+  getEntries: async (q?: string, tagId?: string): Promise<DiaryEntry[]> => {
+    const params = new URLSearchParams();
+    if (q) params.append('q', q);
+    if (tagId) params.append('tag_id', tagId);
+    
+    const url = params.toString() ? `/api/entries?${params.toString()}` : '/api/entries';
+    const backendEntries = await apiClient.get<any[]>(url);
     return backendEntries.map(e => ({
       ...e,
       date: e.created_at,

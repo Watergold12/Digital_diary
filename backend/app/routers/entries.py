@@ -1,6 +1,7 @@
-from typing import List
+from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
+from sqlalchemy import or_
 from ..core.database import SessionLocal
 from ..models.diary import DiaryEntry
 from ..models.tag import Tag
@@ -21,8 +22,28 @@ def get_db():
         db.close()
 
 @router.get("", response_model=List[DiaryEntryResponse])
-def get_entries(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
-    entries = db.query(DiaryEntry).filter(DiaryEntry.user_id == current_user.id).order_by(DiaryEntry.created_at.desc()).all()
+def get_entries(
+    q: Optional[str] = None,
+    tag_id: Optional[str] = None,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    query = db.query(DiaryEntry).filter(DiaryEntry.user_id == current_user.id)
+    
+    if q:
+        search_pattern = f"%{q}%"
+        query = query.filter(
+            or_(
+                DiaryEntry.title.ilike(search_pattern),
+                DiaryEntry.content.ilike(search_pattern),
+                DiaryEntry.tags.any(Tag.name.ilike(search_pattern))
+            )
+        )
+        
+    if tag_id:
+        query = query.filter(DiaryEntry.tags.any(Tag.id == tag_id))
+        
+    entries = query.order_by(DiaryEntry.created_at.desc()).all()
     return entries
 
 @router.post("", response_model=DiaryEntryResponse, status_code=status.HTTP_201_CREATED)

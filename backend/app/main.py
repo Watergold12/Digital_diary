@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.core.config import settings
-from app.routers import auth, entries, tags
+from app.core.config import settings as app_settings
+from app.routers import auth, entries, tags, settings as settings_router
 from app.core.database import Base, engine
 
 app = FastAPI(
@@ -12,7 +12,7 @@ app = FastAPI(
 
 # Set up CORS
 origins = [
-    settings.FRONTEND_URL,
+    app_settings.FRONTEND_URL,
 ]
 
 app.add_middleware(
@@ -26,6 +26,7 @@ app.add_middleware(
 app.include_router(auth.router)
 app.include_router(entries.router)
 app.include_router(tags.router)
+app.include_router(settings_router.router)
 
 @app.get("/api/health")
 def health_check():

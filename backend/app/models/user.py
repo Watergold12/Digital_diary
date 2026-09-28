@@ -23,3 +23,4 @@ class User(Base):
     # Relationships
     diary_entries = relationship("DiaryEntry", back_populates="owner", cascade="all, delete-orphan")
     tags = relationship("Tag", back_populates="owner", cascade="all, delete-orphan")
+    settings = relationship("UserSettings", back_populates="user", uselist=False, cascade="all, delete-orphan")
