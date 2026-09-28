@@ -55,13 +55,13 @@ def get_settings(db: Session = Depends(get_db), current_user: User = Depends(get
 def update_settings(settings_update: SettingsUpdateSchema, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     # Update profile in User model
     if settings_update.profile:
-        current_user.name = settings_update.profile.displayName
-        if settings_update.profile.email != current_user.email:
+        db_user = db.query(User).filter(User.id == current_user.id).first()
+        db_user.name = settings_update.profile.displayName
+        if settings_update.profile.email != db_user.email:
             existing = db.query(User).filter(User.email == settings_update.profile.email).first()
-            if existing and existing.id != current_user.id:
+            if existing and existing.id != db_user.id:
                 raise HTTPException(status_code=400, detail="Email already taken")
-            current_user.email = settings_update.profile.email
-        db.add(current_user)
+            db_user.email = settings_update.profile.email
 
     # Update UserSettings
     settings = db.query(UserSettings).filter(UserSettings.user_id == current_user.id).first()

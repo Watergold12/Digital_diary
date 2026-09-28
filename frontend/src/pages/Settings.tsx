@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSettings } from '../hooks/useSettings';
 import { useDiary } from '../hooks/useDiary';
 import { useTags } from '../hooks/useTags';
@@ -24,6 +24,11 @@ export const Settings: React.FC = () => {
 
   // Profile Form State
   const [profileForm, setProfileForm] = useState(settings.profile);
+
+  // Sync profile form when settings load from API
+  useEffect(() => {
+    setProfileForm(settings.profile);
+  }, [settings.profile]);
 
   // Dialog States
   const [isResetDialogOpen, setIsResetDialogOpen] = useState(false);
