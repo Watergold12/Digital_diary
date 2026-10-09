@@ -8,6 +8,7 @@ __pycache__/
 
 # Virtual environments
 .venv/
+venv/
 backend/venv/*
 env/
 
@@ -19,3 +20,4 @@ env/
 # node_scripts
 node_modules
 dist
+AD_Assignment.docx
