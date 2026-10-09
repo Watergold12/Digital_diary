@@ -36,6 +36,16 @@ router.post('/register', async (req, res) => {
       passwordHash,
     });
 
+    // Create default tags for the new user
+    const Tag = require('../models/Tag');
+    const defaultTags = [
+      { userId: user._id, name: 'Personal', color: 'blue' },
+      { userId: user._id, name: 'Work', color: 'lavender' },
+      { userId: user._id, name: 'Ideas', color: 'yellow' },
+      { userId: user._id, name: 'Health', color: 'green' }
+    ];
+    await Tag.insertMany(defaultTags);
+
     return res.status(200).json(user.toJSON());
   } catch (error) {
     console.error('Register error:', error);
