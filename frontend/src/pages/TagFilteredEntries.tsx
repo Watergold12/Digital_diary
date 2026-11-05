@@ -1,36 +1,42 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useTags } from '../hooks/useTags';
-import { useDiary } from '../hooks/useDiary';
 import { DiaryCard } from '../components/diary/DiaryCard';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { TagBadge } from '../components/tags/TagBadge';
 import { ArrowLeft, Search as SearchIcon } from 'lucide-react';
+import { entriesApi } from '../api/entries';
+import { DiaryEntry } from '../types/diary';
 
 export const TagFilteredEntries: React.FC = () => {
   const { tagId } = useParams<{ tagId: string }>();
   const { tags, isLoading: isTagsLoading } = useTags();
-  const { entries, isLoading: isEntriesLoading } = useDiary();
   const [query, setQuery] = useState('');
+  const [filteredEntries, setFilteredEntries] = useState<DiaryEntry[]>([]);
+  const [isEntriesLoading, setIsEntriesLoading] = useState(true);
 
   const tag = useMemo(() => tags.find(t => t.id === tagId), [tags, tagId]);
 
-  const filteredEntries = useMemo(() => {
-    if (!tag) return [];
+  useEffect(() => {
+    if (!tagId) return;
     
-    const entriesWithTag = entries.filter(e => e.tags.some(t => t.id === tagId));
-    
-    if (!query.trim()) return entriesWithTag;
-    
-    const lowerQuery = query.toLowerCase();
-    return entriesWithTag.filter(entry => 
-      entry.title.toLowerCase().includes(lowerQuery) ||
-      entry.content.toLowerCase().includes(lowerQuery)
-    );
-  }, [entries, tagId, tag, query]);
+    const timer = setTimeout(async () => {
+      try {
+        setIsEntriesLoading(true);
+        const results = await entriesApi.getEntries(query.trim() || undefined, tagId);
+        setFilteredEntries(results);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setIsEntriesLoading(false);
+      }
+    }, 300); // debounce
 
-  if (isTagsLoading || isEntriesLoading) {
+    return () => clearTimeout(timer);
+  }, [query, tagId]);
+
+  if (isTagsLoading || isEntriesLoading && filteredEntries.length === 0) {
     return (
       <div className="max-w-5xl mx-auto animate-pulse space-y-8">
         <div className="h-6 w-24 bg-gray-200 rounded" />

@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, BookOpen, Tags, Search, Settings, PenLine, LogOut } from 'lucide-react';
+import { LayoutDashboard, BookOpen, Tags, Search, Settings, PenLine, LogOut, Sparkles } from 'lucide-react';
+import { AIAssistantModal } from '../ui/AIAssistantModal';
 import { cn } from '../../utils/cn';
 import { Button } from '../ui/Button';
 import { useAuth } from '../../contexts/AuthContext';
@@ -15,6 +16,7 @@ const navItems = [
 export const Sidebar: React.FC = () => {
   const navigate = useNavigate();
   const { logout } = useAuth();
+  const [isAIModalOpen, setIsAIModalOpen] = React.useState(false);
 
   const handleLogout = () => {
     logout();
@@ -70,6 +72,13 @@ export const Sidebar: React.FC = () => {
           Settings
         </NavLink>
         <button
+          onClick={() => setIsAIModalOpen(true)}
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-amber-500 hover:bg-amber-50 dark:hover:bg-amber-900/20 transition-colors"
+        >
+          <Sparkles size={20} />
+          Ask AI
+        </button>
+        <button
           onClick={handleLogout}
           className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-danger hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
         >
@@ -77,6 +86,7 @@ export const Sidebar: React.FC = () => {
           Sign out
         </button>
       </div>
+      <AIAssistantModal isOpen={isAIModalOpen} onClose={() => setIsAIModalOpen(false)} />
     </aside>
   );
 };

@@ -1,5 +1,7 @@
 Assignment1_Report.md
 Implementation_Plan.md
+AD_Assignment.docx
+assignment2_report.md
 
 # Python
 __pycache__/
@@ -8,6 +10,7 @@ __pycache__/
 
 # Virtual environments
 .venv/
+venv/
 backend/venv/*
 env/
 

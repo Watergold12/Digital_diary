@@ -2,8 +2,13 @@ import { DiaryEntry } from '../types/diary';
 import { apiClient } from './client';
 
 export const entriesApi = {
-  getEntries: async (): Promise<DiaryEntry[]> => {
-    const backendEntries = await apiClient.get<any[]>('/api/entries');
+  getEntries: async (q?: string, tagId?: string): Promise<DiaryEntry[]> => {
+    const params = new URLSearchParams();
+    if (q) params.append('q', q);
+    if (tagId) params.append('tag_id', tagId);
+    
+    const url = params.toString() ? `/api/entries?${params.toString()}` : '/api/entries';
+    const backendEntries = await apiClient.get<any[]>(url);
     return backendEntries.map(e => ({
       ...e,
       date: e.created_at,
@@ -32,6 +37,7 @@ export const entriesApi = {
       content: entryData.content,
       mood: entryData.mood,
       tag_ids: entryData.tags ? entryData.tags.map((t: any) => t.id) : [],
+      is_ai_generated: (entryData as any).is_ai_generated || false,
     };
     const e = await apiClient.post<any>('/api/entries', payload);
     return {

@@ -1,11 +1,37 @@
 import { useState, useEffect } from 'react';
-import { AppSettings } from '../types/settings';
-import { settingsService } from '../services/settings';
+import { AppSettings, defaultSettings } from '../types/settings';
+import { settingsApi } from '../api/settings';
 import { useToast } from '../components/ui/Toast';
 
 export const useSettings = () => {
-  const [settings, setSettings] = useState<AppSettings>(settingsService.getSettings());
+  const [settings, setSettings] = useState<AppSettings>(defaultSettings);
+  const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
+
+  useEffect(() => {
+    let mounted = true;
+    
+    const loadSettings = async () => {
+      try {
+        const data = await settingsApi.getSettings();
+        if (mounted) {
+          setSettings(data);
+        }
+      } catch (err) {
+        console.error('Failed to load settings', err);
+      } finally {
+        if (mounted) {
+          setIsLoading(false);
+        }
+      }
+    };
+    
+    loadSettings();
+    
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   useEffect(() => {
     const applyTheme = () => {
@@ -38,40 +64,50 @@ export const useSettings = () => {
     return () => mediaQuery.removeEventListener('change', handler);
   }, [settings.appearance.theme]);
 
-  const updateSettings = (newSettings: AppSettings) => {
-    setSettings(newSettings);
-    settingsService.saveSettings(newSettings);
+  const updateSettings = async (newSettings: Partial<AppSettings>) => {
+    try {
+      // Optimistic update
+      setSettings(prev => ({ ...prev, ...newSettings }));
+      // API call
+      const updated = await settingsApi.updateSettings(newSettings);
+      setSettings(updated);
+    } catch (err) {
+      console.error('Failed to update settings', err);
+      toast('Failed to save settings', 'error');
+    }
   };
 
   const updateProfile = (profile: AppSettings['profile']) => {
-    const next = { ...settings, profile };
-    updateSettings(next);
+    updateSettings({ profile });
     toast('Profile updated successfully', 'success');
   };
 
   const updateAppearance = (appearance: AppSettings['appearance']) => {
-    const next = { ...settings, appearance };
-    updateSettings(next);
+    updateSettings({ appearance });
   };
 
   const updateDiaryPreferences = (diaryPreferences: AppSettings['diaryPreferences']) => {
-    const next = { ...settings, diaryPreferences };
-    updateSettings(next);
+    updateSettings({ diaryPreferences });
   };
 
   const updateNotifications = (notifications: AppSettings['notifications']) => {
-    const next = { ...settings, notifications };
-    updateSettings(next);
+    updateSettings({ notifications });
   };
 
-  const resetSettings = () => {
-    settingsService.resetSettings();
-    setSettings(settingsService.getSettings());
+  const resetSettings = async () => {
+    // Reset to defaults by sending default values, minus the profile which shouldn't be overridden with defaults
+    const defaultsToRestore = {
+      appearance: defaultSettings.appearance,
+      diaryPreferences: defaultSettings.diaryPreferences,
+      notifications: defaultSettings.notifications
+    };
+    await updateSettings(defaultsToRestore);
     toast('Preferences reset to default', 'info');
   };
 
   return {
     settings,
+    isLoading,
     updateProfile,
     updateAppearance,
     updateDiaryPreferences,
